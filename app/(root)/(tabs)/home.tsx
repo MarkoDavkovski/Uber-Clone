@@ -2,11 +2,13 @@ import GoogleTextInput from "@/components/GoogleTextInput";
 import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import { icons, images } from "@/constants";
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
-import React from "react";
+import { useLocationStore } from "@/store";
+import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
+import { Link, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Image,
   Text,
@@ -14,6 +16,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Location from "expo-location";
 
 const recentRides = [
   {
@@ -122,12 +125,70 @@ const recentRides = [
   },
 ];
 
-export default function Page() {
+const Page = () => {
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
+
   const { user } = useUser();
   const loading = true;
+  const router = useRouter();
+  const { signOut } = useAuth();
 
-  const handleSignOut = () => {};
+  const [hasPermissions, setHasPermissions] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Sign Out",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await signOut();
+              router.replace("/(auth)/sign-in");
+            } catch (error) {
+              console.error("Sign out error:", error);
+              Alert.alert(
+                "Sign Out Failed",
+                "Unable to sign out. Please try again."
+              );
+            }
+          },
+        },
+      ]);
+    } catch (error) {
+      console.error("Sign out preparation error:", error);
+    }
+  };
+
   const handleDestinationPress = () => {};
+
+  useEffect(() => {
+    const requestLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        setHasPermissions(false);
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync();
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude,
+        longitude: location.coords?.longitude,
+      });
+
+      setUserLocation({
+        latitude: location.coords?.latitude,
+        longitude: location.coords?.longitude,
+        address: `${address[0].name}, ${address[0].region}`,
+      });
+    };
+
+    requestLocation();
+  }, []);
 
   return (
     <SafeAreaView className="bg-general-500">
@@ -203,4 +264,6 @@ export default function Page() {
       </SignedOut>
     </SafeAreaView>
   );
-}
+};
+
+export default Page;
