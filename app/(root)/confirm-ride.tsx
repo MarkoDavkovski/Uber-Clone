@@ -13,10 +13,10 @@ const ConfirmRide = () => {
     <RideLayout title="Choose a driver" snapPoints={["65%", "85%"]}>
       <FlatList
         data={drivers}
-        renderItem={(item) => (
+        renderItem={({ item }) => (
           <DriverCard
             selected={selectedDriver!}
-            setSelected={() => setSelectedDriver(item.id!)}
+            setSelected={() => setSelectedDriver(Number(item.id!))}
             item={item}
           />
         )}
@@ -27,7 +27,8 @@ const ConfirmRide = () => {
               onPress={() => router.push("/(root)/book-ride")}
             />
           </View>
-        )}></FlatList>
+        )}
+      />
     </RideLayout>
   );
 };

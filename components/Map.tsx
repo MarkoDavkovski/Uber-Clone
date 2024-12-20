@@ -16,6 +16,7 @@ const drivers = [
     car_image_url:
       "https://ucarecdn.com/a2dc52b2-8bf7-4e49-9a36-3ffb5229ed02/-/preview/465x466/",
     car_seats: 4,
+    time: Math.floor(Math.random() * 60),
     rating: "4.80",
   },
   {
@@ -27,6 +28,7 @@ const drivers = [
     car_image_url:
       "https://ucarecdn.com/a3872f80-c094-409c-82f8-c9ff38429327/-/preview/930x932/",
     car_seats: 5,
+    time: Math.floor(Math.random() * 60),
     rating: "4.60",
   },
   {
@@ -38,6 +40,7 @@ const drivers = [
     car_image_url:
       "https://ucarecdn.com/289764fb-55b6-4427-b1d1-f655987b4a14/-/preview/930x932/",
     car_seats: 4,
+    time: Math.floor(Math.random() * 60),
     rating: "4.70",
   },
   {
@@ -49,6 +52,7 @@ const drivers = [
     car_image_url:
       "https://ucarecdn.com/b6fb3b55-7676-4ff3-8484-fb115e268d32/-/preview/930x932/",
     car_seats: 4,
+    time: Math.floor(Math.random() * 60),
     rating: "4.90",
   },
 ];
