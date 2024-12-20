@@ -164,7 +164,15 @@ const Page = () => {
     }
   };
 
-  const handleDestinationPress = () => {};
+  const handleDestinationPress = (location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  }) => {
+    setDestinationLocation(location);
+
+    router.push("/(root)/find-ride");
+  };
 
   useEffect(() => {
     const requestLocation = async () => {
@@ -243,7 +251,7 @@ const Page = () => {
                 <Text className="text-xl font-JakartaBold mt-5 mb-3">
                   Your Current Location
                 </Text>
-                <View className="flex flex-row items-center bg-transparent h-[300px]">
+                <View className="flex flex-row items-center bg-transparent w-full h-[300px]">
                   <Map />
                 </View>
               </>
