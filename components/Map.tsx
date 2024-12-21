@@ -18,6 +18,7 @@ const drivers = [
     car_seats: 4,
     time: Math.floor(Math.random() * 60),
     rating: "4.80",
+    price: "25.00",
   },
   {
     id: "2",
@@ -42,6 +43,7 @@ const drivers = [
     car_seats: 4,
     time: Math.floor(Math.random() * 60),
     rating: "4.70",
+    price: "55.00",
   },
   {
     id: "4",
@@ -54,6 +56,7 @@ const drivers = [
     car_seats: 4,
     time: Math.floor(Math.random() * 60),
     rating: "4.90",
+    price: "36.00",
   },
 ];
 
