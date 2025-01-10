@@ -147,29 +147,23 @@ export async function POST(request: Request) {
     const validatedData = PaymentRequestSchema.parse(body);
     const { name, email, amount } = validatedData;
 
-    // Find or create customer
     const customer = await findOrCreateCustomer(email, name);
-
-    // Create ephemeral key
     const ephemeralKey = await createEphemeralKey(customer.id);
-
-    // Create payment intent
     const paymentIntent = await createPaymentIntent(customer.id, amount);
 
-    return new Response(
-      JSON.stringify({
-        paymentIntent,
-        ephemeralKey,
-        customer: customer.id,
-        publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE,
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const responseData = {
+      paymentIntent,
+      ephemeralKey,
+      customer: customer.id,
+      publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE,
+    };
+
+    return new Response(JSON.stringify(responseData), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     return handleError(error);
   }
