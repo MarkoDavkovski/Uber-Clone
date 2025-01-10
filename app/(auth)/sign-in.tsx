@@ -16,26 +16,19 @@ const SignIn = () => {
   const onSignInPress = useCallback(async () => {
     if (!isLoaded) return;
 
-    // Start the sign-in process using the email and password provided
     try {
       const signInAttempt = await signIn.create({
         identifier: form.email,
         password: form.password,
       });
 
-      // If sign-in process is complete, set the created session as active
-      // and redirect the user
       if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
         router.replace("/");
       } else {
-        // If the status isn't complete, check why. User might need to
-        // complete further steps.
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
     }
   }, [isLoaded, form.email, form.password]);
@@ -74,7 +67,6 @@ const SignIn = () => {
             className="mt-6"
           />
 
-          {/* OAuth */}
           <OAuth />
           <Link
             href="/sign-up"
@@ -83,7 +75,6 @@ const SignIn = () => {
             <Text className="text-primary-500">Sign Up</Text>
           </Link>
         </View>
-        {/* Verification Modal */}
       </View>
     </ScrollView>
   );
