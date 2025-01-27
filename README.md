@@ -103,6 +103,6 @@ Download the Expo Go app on your device and scan the QR code to view the project
 
 Here's a walkthrough video showcasing the application's features and flow:  
 
-[![Watch the Video](https://via.placeholder.com/800x400?text=Application+Showcase+Video)](https://www.youtube.com/shorts/MbuYEHFWxus)
+[![Watch the Video](https://www.youtube.com/shorts/MbuYEHFWxus)](https://www.youtube.com/shorts/MbuYEHFWxus)
 
 Click the thumbnail to watch the video.
